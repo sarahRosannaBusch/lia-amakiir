@@ -1,38 +1,134 @@
+:root {
+    --bgColour: #232323;
+    --bgColour2: #1F1F1F;
+    --grey1: #343434;
+    --grey2: #454545;
+    --foreColour: rgb(230, 230, 250);
+    --foreColour2: rgba(230, 230, 250, 0.75);
+    --accentColour: rgb(112, 37, 165);
+    --accentColour2: rgba(75, 0, 130, 0.5);
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  background-color: var(--bgColour);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--foreColour);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--accentColour);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.charSheet {
+    width: 100vw;
+    padding: 5px;
+}
+
+table {
+    margin: auto;
+    margin-bottom: 1em;
+    color: var(--foreColour2);
+}
+
+thead {
+    color: var(--accentColour);
+}
+
+thead th {    
+    background-color: var(--bgColour2);
+    box-shadow: -1px -1px 5px var(--grey1);
+    padding-bottom: 5px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+tr, thead {
+    box-shadow: 2px 2px 5px var(--grey2);
+}
+
+th, td {
+    background-color: var(--bgColour);
+    box-shadow: -1px -1px 5px var(--grey1);
+}
+
+.header td {
+    font-size: small;
+    box-shadow: none;
+}
+
+.abilities { /* td */
+    padding-top: 0em;
+    padding-bottom: 0.75em;
+    position: relative;
+    width: 2em;
+    font-size: small;
+}
+
+.modifier {
+    background-color: var(--accentColour);
+    border-radius: 25px;
+    width: 2.25em;
+    height: 1.25em;
+    line-height: 1.25em;
+    position: absolute;
+    font-size: medium;
+    bottom: -0.75em;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 1px 1px 2px var(--grey2), -1px -1px 5px var(--grey1);
+    color: var(--foreColour);
+}
+
+.skills {
+    display: flex;
+}
+
+.skills table {
+    flex: 0.5;
+}
+
+.skills th {
+    text-align: right;
+    font-size: small;
+    padding-right: 1em;
+}
+
+.skills td {
+    background-color: var(--accentColour2);
+    width: 2em;
+}
+
+label {
+    font-size: small;
+    color: var(--foreColour2);
+}
+
+button {
+    background-color: var(--accentColour);
+    margin-bottom: 1em;
+    border: none;
+    padding: 7px 1em 7px 1em;
+    border-radius: 7px;
+    color: var(--foreColour);
+    box-shadow: 1px 1px 2px var(--grey2), -1px -1px 5px var(--grey1);
+}
+
+.dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+.hidden {
+    display: none
 }
