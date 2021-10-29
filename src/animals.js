@@ -6,17 +6,17 @@
 //  {
 //     name: '',
 //     size: '',
-//     speed: -1,
-//     flySpeed: -1,    
-//     STR: -1,
-//     DEX: -1,
-//     CON: -1,
-//     naturalArmor: -1,
+//     speed: 0,
+//     flySpeed: 0,    
+//     STR: 0,
+//     DEX: 0,
+//     CON: 0,
+//     naturalArmor: 0,
 //     attack: "",
 //     fullAttack: "",
 //     specialAttacks: '',
-//     skills: {}, //+8
-//     feats: ""
+//     skills: {},
+//     CR: 0
 // }
 
 const SA = {
@@ -38,7 +38,9 @@ export const ANIMALS = [
         attack: "club (1d6) || silver dagger (1d4) [crits on 19] || sling (1d4)",
         fullAttack: "+6/+1 base attack bonus",
         specialAttacks: 'rhino hide armor: charge attack damage bonus (2d6)',
-        skills: {}
+        skills: {},
+        CR: 100, //so it's always on top
+        link: 'https://www.d20srd.org/srd/classes/druid.htm'
     }, {
         name: 'Eagle',
         size: 'small',
@@ -51,7 +53,8 @@ export const ANIMALS = [
         attack: "talons (1d4)",
         fullAttack: "2 talons (1d4), bite (1d4)",
         specialAttacks: '',
-        skills: {spot:8} //+8 racial bonus
+        skills: {spot:8},
+        CR: 0.5
     }, {
         name: 'Megaraptor',
         size: 'large',
@@ -63,7 +66,9 @@ export const ANIMALS = [
         attack: "talons (2d6+5)",
         fullAttack: "talons (2d6+5), 2 foreclaws (1d4+2), bite (1d8+2)",
         specialAttacks: [SA.pounce],
-        skills: {hide:8, jump:8, listen:8, spot:8, survival:8}
+        skills: {hide:8, jump:8, listen:8, spot:8, survival:8},
+        CR: 6,
+        link: "http://www.d20srd.org/srd/monsters/dinosaur.htm#megaraptor"
     }, {
         name: 'Dire Bear',
         size: 'large',
@@ -75,7 +80,8 @@ export const ANIMALS = [
         attack: "claw (2d4+10)",
         fullAttack: "2 claws (2d4+10), bite (2d8+5)",
         specialAttacks: [SA.improvedGrab],
-        skills: {} 
+        skills: {},
+        CR: 7
     }, {
         name: 'Dire Tiger',
         size: 'large',
@@ -87,7 +93,8 @@ export const ANIMALS = [
         attack: "claw (2d4+8)",
         fullAttack: "2 claws (2d4+8), bite (2d6+4)",
         specialAttacks: [SA.improvedGrab, SA.pounce, SA.rake],
-        skills: {hide:4, moveSilently:4, hideInTallGrass:8}
+        skills: {hide:4, moveSilently:4, hideInTallGrass:8},
+        CR: 8
     }, {
         name: 'Giant Octopus',
         size: 'large',
@@ -100,7 +107,21 @@ export const ANIMALS = [
         attack: "tentacle (1d4+5)",
         fullAttack: "8 tentacles (1d4+5), bite (1d8+2)",
         specialAttacks: [SA.improvedGrab, SA.constrict],
-        skills: {hide:4, escapeArtist:10, swim:8
-        }
+        skills: {hide:4, escapeArtist:10, swim:8},
+        CR: 8
+    }, {
+        name: '',
+        size: '',
+        speed: 0,
+        flySpeed: 0,    
+        STR: 0,
+        DEX: 0,
+        CON: 0,
+        naturalArmor: 0,
+        attack: "",
+        fullAttack: "",
+        specialAttacks: '',
+        skills: {},
+        CR: 0
     }
 ];

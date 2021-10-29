@@ -22,11 +22,23 @@ class CharacterSheet extends React.Component {
             AC: 21,
             skillBonus: {}
         }
+        this.changeState = this.changeState.bind(this);
     }
 
     changeState(animal) {
-        //set state for new form
-        console.log("wildshape to: " + JSON.stringify(animal));
+        const newAnimal = ANIMALS.find((value) => {
+            return value.name === animal; 
+        });
+        const newAbilities = JSON.parse(JSON.stringify(this.state.abilities));
+        newAbilities.STR = newAnimal.STR;
+        newAbilities.DEX = newAnimal.DEX;
+        newAbilities.CON = newAnimal.CON;
+
+        this.setState({
+            abilities: newAbilities,
+            form: animal,
+            skillBonus: newAnimal.skills
+        });
     }
 
     render() {
@@ -36,52 +48,201 @@ class CharacterSheet extends React.Component {
                 <WildShape changeState={this.changeState} form={this.state.form} />
                 <Abilities abilities={this.state.abilities} />
                 <SavingThrows abilities={this.state.abilities} />
-                <Skills abilities={this.state.abilities} />
+                <Attacks form={this.state.form} />
+                <Skills abilities={this.state.abilities} bonus={this.state.skillBonus} />
             </div>
         );
     }
+}
+
+function Attacks(props) {
+    const animal = ANIMALS.find((value) => {
+        return value.name === props.form; 
+    });
+
+    return (
+        <ul className='attacks'>
+            <li>{animal.attack} </li>
+            <li>{animal.fullAttack} </li>
+            <li>{animal.specialAttacks} </li>
+        </ul>
+    )
 }
 
 class WildShape extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialog: 'hidden'
+            dialogOpen: false
         }
+        this.showDialog = this.showDialog.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
     }
 
     showDialog() {
         this.setState({
-            dialog: 'dialog'
+            dialogOpen: true
         });
     }
 
-    closeDialog() {
+    closeDialog(animal) {
         this.setState({
-            dialog: 'hidden'
+            dialogOpen: false
         });
+        this.props.changeState(animal);
     }
 
     render() {
+        const animal = ANIMALS.find((value) => {
+            return value.name === this.props.form; 
+        });
         return (
             <div>
                 <label>Wild Shape: </label>
-                <button onClick={() => this.showDialog()}>{this.props.form}</button>
+                <button onClick={this.showDialog}>{this.props.form}</button>
+                <a href={animal.link} target='_blank'>[ link ]</a>
                 <Dialog 
-                    class={this.state.dialog} 
-                    callback={() => this.closeDialog()}
+                    isOpen={this.state.dialogOpen} 
+                    callback={this.closeDialog}
+                    curForm={this.props.form}
                 />
             </div>
         )
     }
 }
 
-function Dialog(props) {
-    return (
-        <div className={props.class}>
-            <button onClick={props.callback}>Change Shape</button>
-        </div>
-    )
+class Dialog extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            filter: [],
+            selected: "Half-Elf"
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.applyFilter = this.applyFilter.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({selected: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+    }
+
+    applyFilter(type) {
+        let curFilters = this.state.filter.slice();
+        if(curFilters.includes(type)) {
+            let i = curFilters.indexOf(type);
+            curFilters.splice(i, 1); //remove from array
+        } else {
+            curFilters.push(type);
+        }
+        this.setState({filter: curFilters});
+    }
+
+    getFilteredList() {
+        let filters = this.state.filter.slice();
+        let animals = ANIMALS.sort(function(a, b){return b.CR - a.CR});
+
+        if(filters.length === 0) {
+            return animals;
+        }
+
+        animals = animals.filter((value) => {
+            let include = false;
+            if(filters.includes('Small') && value.size === 'small') {
+                include = true;
+            } else if(filters.includes('Medium') && value.size === 'medium') {
+                include = true;
+            } else if(filters.includes('Large') && value.size === 'large') {
+                include = true;
+            }
+            return include && value;
+        });
+
+        animals = animals.filter((value) => {
+            let include = false;
+            if(!filters.includes('Flying') && !filters.includes('Swimming')) {
+                include = true;
+            } if(filters.includes('Flying') && value.flySpeed) {
+                include = true;
+            } else if(filters.includes('Swimming') && value.swimSpeed) {
+                include = true;
+            }
+            return include && value;
+        })
+
+        return animals;
+    }
+
+    render() {
+        if(!this.props.isOpen) {
+            return null;
+        }
+
+        let filteredList = this.getFilteredList();
+
+        const animals = filteredList.map((animal) =>
+            <option key={animal.name} value={animal.name}>{animal.name}</option>
+        );
+
+        const selectedAnimal = ANIMALS.find((value) => {
+            return value.name === this.state.selected; 
+        });
+
+        return (
+            <div className="dialog">
+                <div className="innerDialog">
+                    <h1>Wild Shape</h1>
+                    <div className="filters">
+                        <FilterButton click={this.applyFilter}>Small</FilterButton>
+                        <FilterButton click={this.applyFilter}>Medium</FilterButton>
+                        <FilterButton click={this.applyFilter}>Large</FilterButton><br/>
+                        <FilterButton click={this.applyFilter}>Fly</FilterButton>
+                        <FilterButton click={this.applyFilter}>Swim</FilterButton>
+                    </div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>Pick an animal: </label>
+                        <select 
+                            value={this.state.selected ? this.state.selected : this.props.curForm} 
+                            onChange={this.handleChange}
+                        >{animals}
+                        </select>
+                    </form>
+                    <div>
+                        <pre>{JSON.stringify(selectedAnimal, null, "\r")}</pre>
+                    </div>
+                    <button onClick={() => this.props.callback(this.state.selected)}>Change Shape</button>
+                </div>
+            </div>
+        )
+    }
+}
+
+class FilterButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { selected: false }
+        this.toggleBtn = this.toggleBtn.bind(this);
+    }
+
+    toggleBtn() {
+        let state = !this.state.selected;
+        this.setState({selected: state});
+        this.props.click(this.props.children);
+    }
+
+    render() {
+        let className = this.state.selected ? "" : "unselected";
+        return (
+            <button 
+                onClick={this.toggleBtn} 
+                className={className}
+            >{this.props.children}</button>
+        );
+    }
 }
 
 function Skills(props) {
@@ -140,6 +301,9 @@ function Skills(props) {
             let misc = skills[skill][m];
             let mod = skills[skill][a];
             let modifier = rank + misc + mod;
+            if(props.bonus[skill]) {
+                modifier += props.bonus[skill];
+            }
             rows.push(<tr key={skill}><th>{skill}</th><td>{modifier}</td></tr>)
         }
 
