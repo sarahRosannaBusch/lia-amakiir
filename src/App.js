@@ -26,9 +26,8 @@ class CharacterSheet extends React.Component {
     }
 
     changeState(animal) {
-        const newAnimal = ANIMALS.find((value) => {
-            return value.name === animal; 
-        });
+        const newAnimal = _findAnimal(animal);
+        console.log('wild shaping to ' + newAnimal.name);
         const newAbilities = JSON.parse(JSON.stringify(this.state.abilities));
         newAbilities.STR = newAnimal.STR;
         newAbilities.DEX = newAnimal.DEX;
@@ -36,213 +35,184 @@ class CharacterSheet extends React.Component {
 
         this.setState({
             abilities: newAbilities,
-            form: animal,
+            form: newAnimal.name,
             skillBonus: newAnimal.skills
         });
+    }
+
+    openDoc() {
+        window.open('https://docs.google.com/document/d/1Nqd2e5jN7umJwu0_1pBcgzvONexMfg231x-4pcBv4pU/edit#heading=h.9rom2cpesa89');
     }
 
     render() {
         return (
             <div className="charSheet">
+                <h1 onClick={this.openDoc}>Lia Amakiir</h1>
                 <LiaHeader state={this.state} />
                 <WildShape changeState={this.changeState} form={this.state.form} />
                 <Abilities abilities={this.state.abilities} />
                 <SavingThrows abilities={this.state.abilities} />
-                <Attacks form={this.state.form} />
+                <Attacks form={this.state.form} abilities={this.state.abilities} />
                 <Skills abilities={this.state.abilities} bonus={this.state.skillBonus} />
             </div>
         );
     }
 }
 
-function Attacks(props) {
-    const animal = ANIMALS.find((value) => {
-        return value.name === props.form; 
-    });
+function LiaHeader(props) {
+    let animal = _findAnimal(props.state.form);
+    let AC = 11 + animal.naturalArmor + _calcMod(props.state.abilities.DEX); //11 cuz of a misc mod
+    let CON = _calcMod(props.state.abilities.CON);    
+    let otherSpeeds = '';
+    if(animal.flySpeed) otherSpeeds += "; Fly: " + animal.flySpeed;
+    if(animal.swimSpeed) otherSpeeds += "; Swim: " + animal.swimSpeed;
+
+    function openSheet() {        
+        window.open('https://docs.google.com/spreadsheets/d/17tFSotVkqZibHmsRqxpLjVVpUEzBzfbAp5TxtKpov5M/edit#gid=0');
+    }
 
     return (
-        <ul className='attacks'>
-            <li>{animal.attack} </li>
-            <li>{animal.fullAttack} </li>
-            <li>{animal.specialAttacks} </li>
-        </ul>
+        <table className="header">
+            <thead><tr>
+                <th colSpan='2'>
+                    Lvl {props.state.level} 
+                    <a href='https://www.d20srd.org/srd/classes/druid.htm' target="_blank">
+                        Druid
+                    </a>
+                </th>
+            </tr></thead>
+            <tbody>
+                <tr>
+                    <td>Size: {animal.size}</td>
+                    <td>Space/Reach: {animal.spaceReach}</td>
+                </tr> 
+                <tr>
+                    <td  onClick={openSheet}>
+                        <span className='underlined'>
+                            HP Max: {(6+8+4+4+8+4+3+6+4)+(CON*props.state.level)}
+                        </span>
+                    </td>                    
+                    <td>AC: {AC}</td>
+                </tr>             
+                <tr>
+                    <td colSpan='2'>Speed: {animal.speed} {otherSpeeds}</td>
+                </tr>
+            </tbody>
+        </table>
     )
 }
 
 class WildShape extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            dialogOpen: false
-        }
-        this.showDialog = this.showDialog.bind(this);
-        this.closeDialog = this.closeDialog.bind(this);
-    }
-
-    showDialog() {
-        this.setState({
-            dialogOpen: true
-        });
-    }
-
-    closeDialog(animal) {
-        this.setState({
-            dialogOpen: false
-        });
-        this.props.changeState(animal);
-    }
-
-    render() {
-        const animal = ANIMALS.find((value) => {
-            return value.name === this.props.form; 
-        });
-        return (
-            <div>
-                <label>Wild Shape: </label>
-                <button onClick={this.showDialog}>{this.props.form}</button>
-                <a href={animal.link} target='_blank'>[ link ]</a>
-                <Dialog 
-                    isOpen={this.state.dialogOpen} 
-                    callback={this.closeDialog}
-                    curForm={this.props.form}
-                />
-            </div>
-        )
-    }
-}
-
-class Dialog extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            filter: [],
-            selected: "Half-Elf"
-        }
+        this.state = {selected:'Half-Elf'};
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.applyFilter = this.applyFilter.bind(this);
     }
 
     handleChange(event) {
         this.setState({selected: event.target.value});
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-    }
-
-    applyFilter(type) {
-        let curFilters = this.state.filter.slice();
-        if(curFilters.includes(type)) {
-            let i = curFilters.indexOf(type);
-            curFilters.splice(i, 1); //remove from array
-        } else {
-            curFilters.push(type);
-        }
-        this.setState({filter: curFilters});
-    }
-
-    getFilteredList() {
-        let filters = this.state.filter.slice();
-        let animals = ANIMALS.sort(function(a, b){return b.CR - a.CR});
-
-        if(filters.length === 0) {
-            return animals;
-        }
-
-        animals = animals.filter((value) => {
-            let include = false;
-            if(filters.includes('Small') && value.size === 'small') {
-                include = true;
-            } else if(filters.includes('Medium') && value.size === 'medium') {
-                include = true;
-            } else if(filters.includes('Large') && value.size === 'large') {
-                include = true;
-            }
-            return include && value;
-        });
-
-        animals = animals.filter((value) => {
-            let include = false;
-            if(!filters.includes('Flying') && !filters.includes('Swimming')) {
-                include = true;
-            } if(filters.includes('Flying') && value.flySpeed) {
-                include = true;
-            } else if(filters.includes('Swimming') && value.swimSpeed) {
-                include = true;
-            }
-            return include && value;
-        })
-
-        return animals;
+        this.props.changeState(event.target.value);
     }
 
     render() {
-        if(!this.props.isOpen) {
-            return null;
-        }
-
-        let filteredList = this.getFilteredList();
-
-        const animals = filteredList.map((animal) =>
+        const animals = ANIMALS.map((animal) =>
             <option key={animal.name} value={animal.name}>{animal.name}</option>
         );
-
-        const selectedAnimal = ANIMALS.find((value) => {
-            return value.name === this.state.selected; 
-        });
+        const animal = _findAnimal(this.props.form);
 
         return (
-            <div className="dialog">
-                <div className="innerDialog">
-                    <h1>Wild Shape</h1>
-                    <div className="filters">
-                        <FilterButton click={this.applyFilter}>Small</FilterButton>
-                        <FilterButton click={this.applyFilter}>Medium</FilterButton>
-                        <FilterButton click={this.applyFilter}>Large</FilterButton><br/>
-                        <FilterButton click={this.applyFilter}>Fly</FilterButton>
-                        <FilterButton click={this.applyFilter}>Swim</FilterButton>
-                    </div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label>Pick an animal: </label>
-                        <select 
-                            value={this.state.selected ? this.state.selected : this.props.curForm} 
-                            onChange={this.handleChange}
-                        >{animals}
-                        </select>
-                    </form>
-                    <div>
-                        <pre>{JSON.stringify(selectedAnimal, null, "\r")}</pre>
-                    </div>
-                    <button onClick={() => this.props.callback(this.state.selected)}>Change Shape</button>
-                </div>
+            <div>
+                <label>Wild Shape: </label> 
+                <select 
+                    defaultValue={this.props.form} 
+                    onChange={this.handleChange}
+                >{animals}
+                </select>
+                <a className='link' href={animal.link} target='_blank'>[ d20srd ]</a>
             </div>
         )
     }
 }
 
-class FilterButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { selected: false }
-        this.toggleBtn = this.toggleBtn.bind(this);
+function Abilities(props) {
+    function renderTH() {
+        let tr = [];
+        for(let key in props.abilities) {
+            tr.push(<th key={key}>{key}</th>);
+        }
+        return tr;
     }
 
-    toggleBtn() {
-        let state = !this.state.selected;
-        this.setState({selected: state});
-        this.props.click(this.props.children);
+    function renderCells() {
+        let tr = [];
+        for(let key in props.abilities) {
+            let score = props.abilities[key];
+            tr.push(<td key={key} className='abilities'>
+                {score} 
+                <div className='modifier'>{_calcMod(score)}</div>
+            </td>);
+        }
+        return tr;
     }
 
-    render() {
-        let className = this.state.selected ? "" : "unselected";
-        return (
-            <button 
-                onClick={this.toggleBtn} 
-                className={className}
-            >{this.props.children}</button>
-        );
+    return (
+        <table>
+            <thead><tr>{renderTH()}</tr></thead>
+            <tbody>
+                <tr>{renderCells()}</tr>
+            </tbody>
+        </table>
+    )
+}
+
+function SavingThrows(props) {
+    let FORT = 6 + _calcMod(props.abilities.CON) + 1;
+    let REF = 2 + _calcMod(props.abilities.DEX) + 1;
+    let WILL = 6 + _calcMod(props.abilities.WIS) + 1;
+    return (
+        <table>
+            <thead><tr>
+                <th>FORT</th>
+                <th>REF</th>
+                <th>WILL</th>
+            </tr></thead>
+            <tbody><tr>
+                <td>{FORT}</td>
+                <td>{REF}</td>
+                <td>{WILL}</td>
+            </tr></tbody>
+        </table>
+    )
+}
+
+function Attacks(props) {
+    const animal = _findAnimal(props.form);
+    let special = animal.specialAttacks.map((v) => {
+        let [name, desc] = v.split(":");
+        return (<li key={name}><span className="specialName">{name}: </span>{desc}</li>);
+    });
+    let attackBonus = "(+6/+1)";
+    let fullBonus = '';
+    if(props.form !== "Half-Elf") {
+        let STR = _calcMod(props.abilities.STR);
+        let sizeMod = 0;
+        if(animal.size === 'small') sizeMod = 1;
+        if(animal.size === 'large') sizeMod = -1;
+        let primary = 6 + STR + sizeMod;
+        let secondary = primary - 5;
+        fullBonus = attackBonus = "(+" + primary + "/+" + secondary + ")";
     }
+
+
+    return (
+        <table className='attacks'>
+            <tbody>
+                <tr><th>Attack: {attackBonus}:</th><td>{animal.attack}</td></tr>
+                <tr><th>Full: {fullBonus}</th><td>{animal.fullAttack}</td></tr>
+                <tr><th>Special:</th><td><ul>{special}</ul></td></tr>
+            </tbody>
+        </table>
+    )
 }
 
 function Skills(props) {
@@ -294,17 +264,25 @@ function Skills(props) {
         const r = 0;
         const m = 1;
         const a = 2;
-        //const c = 3;
+        const c = 3;
 
         for(let skill in skills) {
             let rank = skills[skill][r];
             let misc = skills[skill][m];
             let mod = skills[skill][a];
             let modifier = rank + misc + mod;
+            let animalSkill = '';
             if(props.bonus[skill]) {
                 modifier += props.bonus[skill];
+                animalSkill = 'animalSkill';
             }
-            rows.push(<tr key={skill}><th>{skill}</th><td>{modifier}</td></tr>)
+            let classSkill = skills[skill][c] ? 'classSkill' : '';
+            rows.push(
+                <tr key={skill}>
+                    <th className={classSkill}>{skill}</th>
+                    <td className={animalSkill}>{modifier}</td>
+                </tr>
+            );
         }
 
         return rows;
@@ -322,73 +300,17 @@ function Skills(props) {
     )
 }
 
-function SavingThrows(props) {
-    let FORT = 6 + _calcMod(props.abilities.CON) + 1;
-    let REF = 2 + _calcMod(props.abilities.DEX) + 1;
-    let WILL = 6 + _calcMod(props.abilities.WIS) + 1;
-    return (
-        <table>
-            <thead><tr>
-                <th>FORT</th>
-                <th>REF</th>
-                <th>WILL</th>
-            </tr></thead>
-            <tbody><tr>
-                <td>{FORT}</td>
-                <td>{REF}</td>
-                <td>{WILL}</td>
-            </tr></tbody>
-        </table>
-    )
-}
+// **** helpers **** //
 
 function _calcMod(abilityScore) {
     return Math.floor((abilityScore-10)/2)
 }
 
-function Abilities(props) {
-    function renderTH() {
-        let tr = [];
-        for(let key in props.abilities) {
-            tr.push(<th key={key}>{key}</th>);
-        }
-        return tr;
-    }
-
-    function renderCells() {
-        let tr = [];
-        for(let key in props.abilities) {
-            let score = props.abilities[key];
-            tr.push(<td key={key} className='abilities'>
-                {score} 
-                <div className='modifier'>{_calcMod(score)}</div>
-            </td>);
-        }
-        return tr;
-    }
-
-    return (
-        <table>
-            <thead><tr>{renderTH()}</tr></thead>
-            <tbody>
-                <tr>{renderCells()}</tr>
-            </tbody>
-        </table>
-    )
-}
-
-function LiaHeader(props) {
-    let animal = ANIMALS.find((v) => v.name === props.state.form);
-    let AC = 11 + animal.naturalArmor + _calcMod(props.state.abilities.DEX); //11 cuz of a misc mod
-    return (
-        <table className="header">
-            <thead><tr><th colSpan='3'>Lia Amakiir - Lvl {props.state.level} Druid</th></tr></thead>
-            <tbody>
-                <tr><td>Speed: {animal.speed}</td><td>AC: {AC}</td><td>Size: {animal.size}</td></tr>
-                <tr><td colSpan='3'>Base Attack: +6/+1</td></tr>
-            </tbody>
-        </table>
-    )
+function _findAnimal(name) {
+    const animal = ANIMALS.find((value) => {
+        return value.name === name; 
+    });
+    return animal;
 }
 
 export default App;

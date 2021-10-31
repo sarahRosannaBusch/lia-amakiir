@@ -26,6 +26,13 @@
   color: var(--accentColour);
 }
 
+h1 {
+    color: var(--accentColour);
+    text-shadow: 1px 2px 2px var(--offsetColour), -1px -1px 1px var(--foreColour);
+    padding: 0.5em;
+    padding-bottom: 0.25em;
+}
+
 .charSheet {
     width: 100vw;
     padding: 5px;
@@ -60,7 +67,19 @@ th, td {
 
 .header td {
     font-size: small;
-    box-shadow: none;
+    padding: 0.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+    min-width: 8em;
+}
+
+.underlined {
+    text-decoration: underline;
+}
+
+.header a {
+    color: var(--accentColour);
+    padding-left: 0.5em;
 }
 
 .abilities { /* td */
@@ -88,6 +107,7 @@ th, td {
 
 .skills {
     display: flex;
+    margin-top: 1em;
 }
 
 .skills table {
@@ -97,12 +117,22 @@ th, td {
 .skills th {
     text-align: right;
     font-size: small;
-    padding-right: 1em;
+    padding-right: 0.75em;
 }
 
 .skills td {
     background-color: var(--accentColour2);
     width: 2em;
+    font-size: medium;
+}
+
+.classSkill {
+    color: var(--foreColour);
+}
+
+.animalSkill {
+    color: var(--offsetColour);
+    font-weight: bold;
 }
 
 label {
@@ -122,38 +152,87 @@ button {
     box-shadow: 1px 1px 2px var(--grey2), -1px -1px 5px var(--grey1);
 }
 
-.dialog {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 100;
-    padding: 1em;
-}
-
-.innerDialog {
-    background-color: var(--bgColour);
-    width: 100%;
-    height: 100%;
-    padding: 1em;
-}
-
-h1 {
-    margin-bottom: 0.5em;
-}
-
 button.unselected {
     background-color: var(--grey);
     color: var(--foreColour2);
 }
 
 select {
-    padding: 0.5em;
     border: none;
     padding: 7px 1em 7px 1em;
     border-radius: 7px;
+    background-color: var(--accentColour);
+    color: var(--foreColour);
+    margin-bottom: 1em;
+    box-shadow: 1px 1px 2px var(--offsetColour), -1px -1px 5px var(--grey1);
+    outline: none;
+}
+
+label {
+    margin-right: 0.5em;
+    font-weight: bold;
+    color: var(--offsetColour);
+}
+
+option {
+    background-color: var(--bgColour);
+}
+
+a.link {
+    font-size: small;
+    margin-left: 0.5em;
+    font-weight: bold;
+    color: var(--offsetColour);
+}
+
+.attacks {
+    font-size: small;
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.attacks th {
+    color: var(--accentColour);    
+    padding-left: 0.75em;
+    padding-right: 0.5em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    background-color: var(--bgColour2);
+}
+
+.attacks td {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+
+.filters {
+    margin-bottom: 0.5em;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {    
+    padding-bottom: 0.25em;
+}
+
+.specialName {
+    font-weight: bold;
+}
+
+
+/* not in use (TODO: delete) */
+
+.bottomButton {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding-bottom: 2em;
+    width: 100%;
 }
 
 pre {
@@ -164,15 +243,22 @@ pre {
     overflow-x: scroll;
 }
 
-a {
-    font-size: small;
-    margin-left: 0.5em;
-    font-weight: bold;
-    color: var(--accentColour);
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+    padding: 1em;
 }
 
-.attacks {
-    font-size: small;
-    margin-bottom: 1em;
-    text-align: left;
+.innerDialog {
+    background-color: var(--bgColour);
+    width: 100%;
+    flex: 1;
+    padding: 1em;
 }
