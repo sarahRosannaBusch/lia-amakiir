@@ -1,5 +1,5 @@
 # D&D 3.5e Druid Wild Shaper
-An exercise in React, lists, tables, and array manipulation. 
+An exercise in React. 
 
 Basic character sheet for Lia Amakiir. Updates itself based on the chosen wild shape form.
 

@@ -21,8 +21,8 @@
 
 const SA = {
     pounce: 'pounce: if it charges can make a full attack',
-    improvedGrab: 'improved grab: if it hits, can attempt a grapple',
-    rake: 'rake: attack bonus +18 (2d4+4)',
+    improvedGrab: 'improved grab: if it hits, can grapple w/o provoking AoO',
+    rake: 'rake: 2 claw attacks while grappling (2d4+4)',
     constrict: 'constrict: on a successful grapple, squeeze (2d8+6)'
 }
 
@@ -50,7 +50,7 @@ export const ANIMALS = [
         STR: 10,
         DEX: 15,
         CON: 12,
-        naturalArmor: 1,
+        naturalArmor: 1+1, //plus size mod
         attack: "talons (1d4)",
         fullAttack: "2 talons (1d4), bite (1d4)",
         specialAttacks: [],
@@ -65,7 +65,7 @@ export const ANIMALS = [
         STR: 21,
         DEX: 15,
         CON: 21,
-        naturalArmor: 6,
+        naturalArmor: 6-1,
         attack: "talons (2d6+5)",
         fullAttack: "talons (2d6+5), 2 foreclaws (1d4+2), bite (1d8+2)",
         specialAttacks: [SA.pounce],
@@ -80,7 +80,7 @@ export const ANIMALS = [
         STR: 31,
         DEX: 13,
         CON: 19,
-        naturalArmor: 7,
+        naturalArmor: 7-1,
         attack: "claw (2d4+10)",
         fullAttack: "2 claws (2d4+10), bite (2d8+5)",
         specialAttacks: [SA.improvedGrab],
@@ -95,10 +95,10 @@ export const ANIMALS = [
         STR: 27,
         DEX: 15,
         CON: 17,
-        naturalArmor: 6,
+        naturalArmor: 6-1,
         attack: "claw (2d4+8)",
         fullAttack: "2 claws (2d4+8), bite (2d6+4)",
-        specialAttacks: [SA.improvedGrab, SA.pounce, SA.rake],
+        specialAttacks: [SA.pounce, SA.improvedGrab, SA.rake],
         spaceReach: '10ft/5ft',
         skills: {hide:4, moveSilently:4, hideInTallGrass:8},
         CR: 8,
@@ -111,7 +111,7 @@ export const ANIMALS = [
         STR: 20,
         DEX: 15,
         CON: 13,
-        naturalArmor: 7,
+        naturalArmor: 7-1,
         attack: "tentacle (1d4+5)",
         fullAttack: "8 tentacles (1d4+5), bite (1d8+2)",
         specialAttacks: [SA.improvedGrab, SA.constrict],

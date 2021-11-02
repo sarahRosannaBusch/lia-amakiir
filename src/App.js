@@ -61,7 +61,10 @@ class CharacterSheet extends React.Component {
 
 function LiaHeader(props) {
     let animal = _findAnimal(props.state.form);
-    let AC = 11 + animal.naturalArmor + _calcMod(props.state.abilities.DEX); //11 cuz of a misc mod
+    const DEX = _calcMod(props.state.abilities.DEX);
+    let AC = 11 + animal.naturalArmor + DEX; //11 cuz of a misc mod
+    let ffAC = 11 + animal.naturalArmor;
+    let touchAC = 11 + DEX;
     let CON = _calcMod(props.state.abilities.CON);    
     let otherSpeeds = '';
     if(animal.flySpeed) otherSpeeds += "; Fly: " + animal.flySpeed;
@@ -76,7 +79,7 @@ function LiaHeader(props) {
             <thead><tr>
                 <th colSpan='2'>
                     Lvl {props.state.level} 
-                    <a href='https://www.d20srd.org/srd/classes/druid.htm' target="_blank">
+                    <a href='https://www.d20srd.org/srd/classes/druid.htm'>
                         Druid
                     </a>
                 </th>
@@ -92,7 +95,7 @@ function LiaHeader(props) {
                             HP Max: {(6+8+4+4+8+4+3+6+4)+(CON*props.state.level)}
                         </span>
                     </td>                    
-                    <td>AC: {AC}</td>
+                    <td>AC: {AC} (T: {touchAC}, FF: {ffAC})</td>
                 </tr>             
                 <tr>
                     <td colSpan='2'>Speed: {animal.speed} {otherSpeeds}</td>
@@ -128,7 +131,7 @@ class WildShape extends React.Component {
                     onChange={this.handleChange}
                 >{animals}
                 </select>
-                <a className='link' href={animal.link} target='_blank'>[ d20srd ]</a>
+                <a className='link' href={animal.link}>[ d20srd ]</a>
             </div>
         )
     }
@@ -193,25 +196,42 @@ function Attacks(props) {
     });
     let attackBonus = "(+6/+1)";
     let fullBonus = '';
+    let STR = _calcMod(props.abilities.STR);
+    let grapple = STR;
     if(props.form !== "Half-Elf") {
-        let STR = _calcMod(props.abilities.STR);
         let sizeMod = 0;
-        if(animal.size === 'small') sizeMod = 1;
-        if(animal.size === 'large') sizeMod = -1;
+        switch(animal.size) {
+            case 'small': 
+                grapple += -4; 
+                sizeMod = 1;
+                break;
+            case 'large': 
+                grapple += 4; 
+                sizeMod = -1;
+                break;
+            default: break; //medium is +0
+        }
         let primary = 6 + STR + sizeMod;
         let secondary = primary - 5;
         fullBonus = attackBonus = "(+" + primary + "/+" + secondary + ")";
     }
 
-
     return (
-        <table className='attacks'>
-            <tbody>
-                <tr><th>Attack: {attackBonus}:</th><td>{animal.attack}</td></tr>
-                <tr><th>Full: {fullBonus}</th><td>{animal.fullAttack}</td></tr>
-                <tr><th>Special:</th><td><ul>{special}</ul></td></tr>
-            </tbody>
-        </table>
+        <div>
+            <table className='attacks'>
+                <tbody>
+                    <tr><th>Attack: {attackBonus}:</th><td>{animal.attack}</td></tr>
+                    <tr><th>Full: {fullBonus}</th><td>{animal.fullAttack}</td></tr>
+                    <tr>
+                        <th><a href='http://www.d20srd.org/srd/combat/specialAttacks.htm#grappleChecks'>
+                            Special:
+                        </a></th>
+                        <td><ul>{special}</ul></td>
+                    </tr>
+                </tbody>
+            </table>            
+            <p>*Grapple = (+6/+1) + {grapple}</p>
+        </div>
     )
 }
 
@@ -289,13 +309,16 @@ function Skills(props) {
     }
 
     return (
-        <div className='skills'>
-            <table><tbody>
-                {insertRows(skills2)}
-            </tbody></table>
-            <table><tbody>
-                {insertRows(skills1)}
-            </tbody></table>
+        <div>            
+            <h2>Skills</h2>
+            <div className='skills'>
+                <table><tbody>
+                    {insertRows(skills2)}
+                </tbody></table>
+                <table><tbody>
+                    {insertRows(skills1)}
+                </tbody></table>
+            </div>            
         </div>
     )
 }
