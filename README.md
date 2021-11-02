@@ -30,4 +30,6 @@ git remote add origin git@github.com:sarahRosannaBusch/lia-amakiir.git
 4. Generate a production build and deploy it to gh-pages repo in GitHub
 npm run deploy
 
+Note: this will create a gh-pages branch and push only deployment code to it, so I switched my GitHub Pages settings to build it from there, keeping it separate from the source code in the main branch.
+
 View app at: https://sarahrosannabusch.github.io/lia-amakiir/
