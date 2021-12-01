@@ -1,9 +1,9 @@
 /** @brief d&d 3.5e wild shape animals
  *  @author Sarah Rosanna Busch
- * size, speed, natural armor and weapons, special attacks, str, dex, con
+ *  @date 30 Nov 2021
  */
 
-//  {
+// {
 //     name: '',
 //     size: '',
 //     speed: 0,
@@ -15,8 +15,10 @@
 //     attack: "",
 //     fullAttack: "",
 //     specialAttacks: '',
+//     spaceReach: '5ft/5ft',
 //     skills: {},
-//     CR: 0
+//     CR: 0,
+//     link: ''
 // }
 
 const SA = {

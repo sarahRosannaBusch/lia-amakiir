@@ -1,13 +1,25 @@
 import React from 'react';
 import './App.css';
 import { ANIMALS } from './animals.js';
+import { useCookies } from "react-cookie";
+
 
 function App() {
-  return (
-    <div className="App">
-        <CharacterSheet />
-    </div>
-  );
+    const [cookies, setCookie] = useCookies(["user"]);
+
+    function handleCookie(form) {
+        setCookie("user", form, {
+            path: "/"
+        });
+    }
+
+    let startingForm = cookies.user ? cookies.user : "Half-Elf";
+
+    return (
+        <div className="App">
+            <CharacterSheet form={startingForm} handleCookie={handleCookie}/>
+        </div>
+    );
 }
 
 class CharacterSheet extends React.Component {
@@ -18,7 +30,7 @@ class CharacterSheet extends React.Component {
             abilities: {
                 STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 16, CHA: 9
             },
-            form: "Half-Elf",
+            form: props.form,
             AC: 21,
             skillBonus: {}
         }
@@ -38,6 +50,8 @@ class CharacterSheet extends React.Component {
             form: newAnimal.name,
             skillBonus: newAnimal.skills
         });
+
+        this.props.handleCookie(newAnimal.name);
     }
 
     openDoc() {
@@ -108,8 +122,12 @@ function LiaHeader(props) {
 class WildShape extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {selected:'Half-Elf'};
+        this.state = {selected:props.form};
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.changeState(this.state.selected);
     }
 
     handleChange(event) {
