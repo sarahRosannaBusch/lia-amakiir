@@ -83,6 +83,7 @@ function LiaHeader(props) {
     let otherSpeeds = '';
     if(animal.flySpeed) otherSpeeds += "; Fly: " + animal.flySpeed;
     if(animal.swimSpeed) otherSpeeds += "; Swim: " + animal.swimSpeed;
+    if(animal.climbSpeed) otherSpeeds += "; Crawl: " + animal.climbSpeed;
 
     function openSheet() {        
         window.open('https://docs.google.com/spreadsheets/d/17tFSotVkqZibHmsRqxpLjVVpUEzBzfbAp5TxtKpov5M/edit#gid=0');
