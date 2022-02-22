@@ -26,9 +26,9 @@ class CharacterSheet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            level: 8,
+            level: 9,
             abilities: {
-                STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 16, CHA: 9
+                STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 17, CHA: 9
             },
             form: props.form,
             AC: 21,
@@ -107,7 +107,7 @@ function LiaHeader(props) {
                 <tr>
                     <td  onClick={openSheet}>
                         <span className='underlined'>
-                            HP Max: {(6+8+4+4+8+4+3+6+4)+(CON*props.state.level)}
+                            HP Max: {(6+8+4+4+8+4+3+6+4+6)+(CON*props.state.level)}
                         </span>
                     </td>                    
                     <td>AC: {AC} (T: {touchAC}, FF: {ffAC})</td>
@@ -188,9 +188,9 @@ function Abilities(props) {
 }
 
 function SavingThrows(props) {
-    let FORT = 6 + _calcMod(props.abilities.CON) + 1;
-    let REF = 2 + _calcMod(props.abilities.DEX) + 1;
-    let WILL = 6 + _calcMod(props.abilities.WIS) + 1;
+    let FORT = 6 + _calcMod(props.abilities.CON) + 2;
+    let REF = 3 + _calcMod(props.abilities.DEX) + 2;
+    let WILL = 8 + _calcMod(props.abilities.WIS) + 2;
     return (
         <table>
             <thead><tr>
@@ -263,7 +263,7 @@ function Skills(props) {
 
     let skills1 = { //ranks, misc modifiers, ability, class skill
         concentration: [6, 0, CON, true],
-        craft: [0, 0, INT, true],
+        craft: [2, 0, INT, true],
         diplomacy: [0, 2, CHA, true],
         gatherInfo: [0, 2, CHA, false],
         handleAnimal: [6, 0, CHA, true],
@@ -272,9 +272,9 @@ function Skills(props) {
         listen: [2, 1, WIS, false],
         professionSailing: [1, 0, WIS, true],
         ride: [0, 2, DEX, true],
-        search: [0, 1, INT, false],
+        search: [2, 1, INT, false],
         spellcraft: [2, 0, INT, true],
-        spot: [8, 1, WIS, true],
+        spot: [10, 1, WIS, true],
         survival: [5, 5, WIS, true],
         survivalInNature: [5, 7, WIS, true]
     }
