@@ -26,7 +26,7 @@ class CharacterSheet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            level: 9,
+            level: 10,
             abilities: {
                 STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 17, CHA: 9
             },
@@ -107,7 +107,7 @@ function LiaHeader(props) {
                 <tr>
                     <td  onClick={openSheet}>
                         <span className='underlined'>
-                            HP Max: {(6+8+4+4+8+4+3+6+4+6)+(CON*props.state.level)}
+                            HP Max: {(6+8+4+4+8+4+3+6+4+6+5)+(CON*props.state.level)}
                         </span>
                     </td>                    
                     <td>AC: {AC} (T: {touchAC}, FF: {ffAC})</td>
@@ -188,9 +188,9 @@ function Abilities(props) {
 }
 
 function SavingThrows(props) {
-    let FORT = 6 + _calcMod(props.abilities.CON) + 2;
+    let FORT = 7 + _calcMod(props.abilities.CON) + 2;
     let REF = 3 + _calcMod(props.abilities.DEX) + 2;
-    let WILL = 8 + _calcMod(props.abilities.WIS) + 2;
+    let WILL = 9 + _calcMod(props.abilities.WIS) + 2;
     return (
         <table>
             <thead><tr>
@@ -213,7 +213,7 @@ function Attacks(props) {
         let [name, desc] = v.split(":");
         return (<li key={name}><span className="specialName">{name}: </span>{desc}</li>);
     });
-    let attackBonus = "(+6/+1)";
+    let attackBonus = "(+7/+2)";
     let fullBonus = '';
     let STR = _calcMod(props.abilities.STR);
     let grapple = STR;
@@ -230,7 +230,7 @@ function Attacks(props) {
                 break;
             default: break; //medium is +0
         }
-        let primary = 6 + STR + sizeMod;
+        let primary = 7 + STR + sizeMod;
         let secondary = primary - 5;
         fullBonus = attackBonus = "(+" + primary + "/+" + secondary + ")";
     }
@@ -249,7 +249,7 @@ function Attacks(props) {
                     </tr>
                 </tbody>
             </table>            
-            <p>*Grapple = (+6/+1) + {grapple}</p>
+            <p>*Grapple = (+7/+2) + {grapple}</p>
         </div>
     )
 }
@@ -262,8 +262,8 @@ function Skills(props) {
     let { STR, DEX, CON, INT, WIS, CHA } = mods;
 
     let skills1 = { //ranks, misc modifiers, ability, class skill
-        concentration: [6, 0, CON, true],
-        craft: [2, 0, INT, true],
+        concentration: [8, 0, CON, true],
+        craft: [4, 0, INT, true],
         diplomacy: [0, 2, CHA, true],
         gatherInfo: [0, 2, CHA, false],
         handleAnimal: [6, 0, CHA, true],
