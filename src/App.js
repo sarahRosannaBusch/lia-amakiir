@@ -28,7 +28,7 @@ class CharacterSheet extends React.Component {
         this.state = {
             level: 10,
             abilities: {
-                STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 17, CHA: 9
+                STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 19, CHA: 9
             },
             form: props.form,
             AC: 21,
