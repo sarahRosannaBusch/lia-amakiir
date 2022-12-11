@@ -31,7 +31,7 @@ class CharacterSheet extends React.Component {
                 STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 19, CHA: 9
             },
             form: props.form,
-            AC: 21,
+            AC: 21+2, //rainbow belt
             skillBonus: {}
         }
         this.changeState = this.changeState.bind(this);
@@ -269,6 +269,7 @@ function Skills(props) {
         handleAnimal: [6, 0, CHA, true],
         heal: [5, 0, WIS, true],
         knowledgeNature: [8, 7, INT, true],
+        knowLocalGeography: [0, 10, INT, false],
         listen: [2, 1, WIS, false],
         professionSailing: [1, 0, WIS, true],
         ride: [0, 2, DEX, true],
