@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/lia-amakiir/static/css/main.4c0614b3.chunk.css",
-    "main.js": "/lia-amakiir/static/js/main.092274f9.chunk.js",
-    "main.js.map": "/lia-amakiir/static/js/main.092274f9.chunk.js.map",
+    "main.js": "/lia-amakiir/static/js/main.36dc0863.chunk.js",
+    "main.js.map": "/lia-amakiir/static/js/main.36dc0863.chunk.js.map",
     "runtime-main.js": "/lia-amakiir/static/js/runtime-main.073c1abd.js",
     "runtime-main.js.map": "/lia-amakiir/static/js/runtime-main.073c1abd.js.map",
     "static/js/2.3890f559.chunk.js": "/lia-amakiir/static/js/2.3890f559.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.073c1abd.js",
     "static/js/2.3890f559.chunk.js",
     "static/css/main.4c0614b3.chunk.css",
-    "static/js/main.092274f9.chunk.js"
+    "static/js/main.36dc0863.chunk.js"
   ]
 }
