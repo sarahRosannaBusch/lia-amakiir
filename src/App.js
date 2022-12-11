@@ -31,7 +31,7 @@ class CharacterSheet extends React.Component {
                 STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 19, CHA: 9
             },
             form: props.form,
-            AC: 21+2, //rainbow belt
+            AC: 23, //10 + rhino armor + shield + ring of power + rainbow belt + 1(?)
             skillBonus: {}
         }
         this.changeState = this.changeState.bind(this);
@@ -76,7 +76,7 @@ class CharacterSheet extends React.Component {
 function LiaHeader(props) {
     let animal = _findAnimal(props.state.form);
     const DEX = _calcMod(props.state.abilities.DEX);
-    let AC = 11 + animal.naturalArmor + DEX; //11 cuz of a misc mod
+    let AC = 13 + animal.naturalArmor + DEX; //11 cuz of a misc mod + rainbow belt
     let ffAC = 11 + animal.naturalArmor;
     let touchAC = 11 + DEX;
     let CON = _calcMod(props.state.abilities.CON);    
