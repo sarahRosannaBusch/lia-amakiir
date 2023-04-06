@@ -1,7 +1,7 @@
 # D&D 3.5e Druid Wild Shaper
 An exercise in React and GitHub Pages. 
 
-Basic character sheet for Lia Amakiir. Updates itself based on the chosen wild shape form.
+Basic character sheet for Lia Amakiir, my half-elf druid. Updates itself based on the chosen wild shape form.
 
 # React App
 

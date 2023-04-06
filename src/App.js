@@ -26,7 +26,7 @@ class CharacterSheet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            level: 10,
+            level: 11,
             abilities: {
                 STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 19, CHA: 9
             },
@@ -77,7 +77,7 @@ function LiaHeader(props) {
     let animal = _findAnimal(props.state.form);
     const DEX = _calcMod(props.state.abilities.DEX);
     let AC = 13 + animal.naturalArmor + DEX; //11 cuz of a misc mod + rainbow belt
-    let ffAC = 11 + animal.naturalArmor;
+    let ffAC = 13 + animal.naturalArmor;
     let touchAC = 11 + DEX;
     let CON = _calcMod(props.state.abilities.CON);    
     let otherSpeeds = '';
@@ -107,7 +107,7 @@ function LiaHeader(props) {
                 <tr>
                     <td  onClick={openSheet}>
                         <span className='underlined'>
-                            HP Max: {(6+8+4+4+8+4+3+6+4+6+5)+(CON*props.state.level)}
+                            HP Max: {(6+8+4+4+8+4+3+6+4+6+5+4)+(CON*props.state.level)}
                         </span>
                     </td>                    
                     <td>AC: {AC} (T: {touchAC}, FF: {ffAC})</td>
@@ -213,7 +213,7 @@ function Attacks(props) {
         let [name, desc] = v.split(":");
         return (<li key={name}><span className="specialName">{name}: </span>{desc}</li>);
     });
-    let attackBonus = "(+7/+2)";
+    let attackBonus = "(+8/+3)";
     let fullBonus = '';
     let STR = _calcMod(props.abilities.STR);
     let grapple = STR;
@@ -230,7 +230,7 @@ function Attacks(props) {
                 break;
             default: break; //medium is +0
         }
-        let primary = 7 + STR + sizeMod;
+        let primary = 8 + STR + sizeMod;
         let secondary = primary - 5;
         fullBonus = attackBonus = "(+" + primary + "/+" + secondary + ")";
     }
@@ -249,7 +249,7 @@ function Attacks(props) {
                     </tr>
                 </tbody>
             </table>            
-            <p>*Grapple = (+7/+2) + {grapple}</p>
+            <p>*Grapple = (+8/+3) + {grapple}</p>
         </div>
     )
 }
@@ -273,7 +273,7 @@ function Skills(props) {
         listen: [2, 1, WIS, false],
         professionSailing: [1, 0, WIS, true],
         ride: [0, 2, DEX, true],
-        search: [2, 1, INT, false],
+        search: [6, 1, INT, false],
         spellcraft: [2, 0, INT, true],
         spot: [10, 1, WIS, true],
         survival: [5, 5, WIS, true],
