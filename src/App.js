@@ -26,9 +26,9 @@ class CharacterSheet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            level: 11,
+            level: 12,
             abilities: {
-                STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 19, CHA: 9
+                STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 20, CHA: 9
             },
             form: props.form,
             AC: 23, //10 + rhino armor + shield + ring of power + rainbow belt + 1(?)
@@ -94,7 +94,7 @@ function LiaHeader(props) {
             <thead><tr>
                 <th colSpan='2'>
                     Lvl {props.state.level} 
-                    <a href='https://www.d20srd.org/srd/classes/druid.htm'>
+                    <a target="_blank" href='https://www.d20srd.org/srd/classes/druid.htm'>
                         Druid
                     </a>
                 </th>
@@ -107,7 +107,7 @@ function LiaHeader(props) {
                 <tr>
                     <td  onClick={openSheet}>
                         <span className='underlined'>
-                            HP Max: {(6+8+4+4+8+4+3+6+4+6+5+4)+(CON*props.state.level)}
+                            HP Max: {(6+8+4+4+8+4+3+6+4+6+5+4+2)+(CON*props.state.level)}
                         </span>
                     </td>                    
                     <td>AC: {AC} (T: {touchAC}, FF: {ffAC})</td>
@@ -150,7 +150,7 @@ class WildShape extends React.Component {
                     onChange={this.handleChange}
                 >{animals}
                 </select>
-                <a className='link' href={animal.link}>[ d20srd ]</a>
+                <a className='link' target='_blank' href={animal.link}>[ d20srd ]</a>
             </div>
         )
     }
@@ -188,9 +188,9 @@ function Abilities(props) {
 }
 
 function SavingThrows(props) {
-    let FORT = 7 + _calcMod(props.abilities.CON) + 2;
-    let REF = 3 + _calcMod(props.abilities.DEX) + 2;
-    let WILL = 9 + _calcMod(props.abilities.WIS) + 2;
+    let FORT = 8 + _calcMod(props.abilities.CON) + 2;
+    let REF = 4 + _calcMod(props.abilities.DEX) + 2;
+    let WILL = 10 + _calcMod(props.abilities.WIS) + 2;
     return (
         <table>
             <thead><tr>
@@ -213,7 +213,7 @@ function Attacks(props) {
         let [name, desc] = v.split(":");
         return (<li key={name}><span className="specialName">{name}: </span>{desc}</li>);
     });
-    let attackBonus = "(+8/+3)";
+    let attackBonus = "(+9/+4)";
     let fullBonus = '';
     let STR = _calcMod(props.abilities.STR);
     let grapple = STR;
@@ -230,7 +230,7 @@ function Attacks(props) {
                 break;
             default: break; //medium is +0
         }
-        let primary = 8 + STR + sizeMod;
+        let primary = 9 + STR + sizeMod;
         let secondary = primary - 5;
         fullBonus = attackBonus = "(+" + primary + "/+" + secondary + ")";
     }
@@ -242,14 +242,14 @@ function Attacks(props) {
                     <tr><th>Attack: {attackBonus}:</th><td>{animal.attack}</td></tr>
                     <tr><th>Full: {fullBonus}</th><td>{animal.fullAttack}</td></tr>
                     <tr>
-                        <th><a href='http://www.d20srd.org/srd/combat/specialAttacks.htm#grappleChecks'>
+                        <th><a target="_blank" href='http://www.d20srd.org/srd/combat/specialAttacks.htm#grappleChecks'>
                             Special:
                         </a></th>
                         <td><ul>{special}</ul></td>
                     </tr>
                 </tbody>
             </table>            
-            <p>*Grapple = (+8/+3) + {grapple}</p>
+            <p>*Grapple = (+9/+4) + {grapple}</p>
         </div>
     )
 }
@@ -269,8 +269,8 @@ function Skills(props) {
         handleAnimal: [6, 0, CHA, true],
         heal: [5, 0, WIS, true],
         knowledgeNature: [8, 7, INT, true],
-        knowLocalGeography: [0, 10, INT, false],
-        listen: [2, 1, WIS, false],
+        knowLocalGeography: [2, 10, INT, false],
+        listen: [4, 1, WIS, false],
         professionSailing: [1, 0, WIS, true],
         ride: [0, 2, DEX, true],
         search: [6, 1, INT, false],
