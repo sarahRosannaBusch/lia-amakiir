@@ -190,7 +190,7 @@ function Abilities(props) {
 function SavingThrows(props) {
     let FORT = 8 + _calcMod(props.abilities.CON) + 2;
     let REF = 4 + _calcMod(props.abilities.DEX) + 2;
-    let WILL = 10 + _calcMod(props.abilities.WIS) + 2;
+    let WILL = 10 + _calcMod(props.abilities.WIS) + 2 + 2;
     return (
         <table>
             <thead><tr>
