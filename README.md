@@ -7,7 +7,7 @@ Basic character sheet for Lia Amakiir, my half-elf druid. Updates itself based o
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+In the project directory, run:
 
 ### `npm install`
 
@@ -23,16 +23,16 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 Deployed on GitHub Pages using the following steps:
 
 1. Install gh pages in the project's directory:
-npm install gh-pages --save-dev
+`npm install gh-pages --save-dev`
 
 2. Add homepage, predeploy, and deploy fields to package.json
 
 3. Create remote GitHub repo and initialize it as remote
-git init
-git remote add origin git@github.com:sarahRosannaBusch/lia-amakiir.git
+`git init`
+`git remote add origin git@github.com:sarahRosannaBusch/lia-amakiir.git`
 
 4. Generate a production build and deploy it to gh-pages repo in GitHub
-npm run deploy
+`npm run deploy`
 
 Note: this will create a gh-pages branch and push only deployment code to it, so I switched my GitHub Pages settings to build it from there, keeping it separate from the source code in the main branch.
 

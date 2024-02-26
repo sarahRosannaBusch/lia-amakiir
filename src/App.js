@@ -5,14 +5,13 @@ import { useCookies } from "react-cookie";
 
 
 function App() {
+    //use cookies for persistent data
     const [cookies, setCookie] = useCookies(["user"]);
-
     function handleCookie(form) {
         setCookie("user", form, {
             path: "/"
         });
     }
-
     let startingForm = cookies.user ? cookies.user : "Half-Elf";
 
     return (
@@ -30,7 +29,7 @@ class CharacterSheet extends React.Component {
             abilities: {
                 STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 20, CHA: 9
             },
-            form: props.form,
+            form: props.form, //wildshape form
             AC: 23, //10 + rhino armor + shield + ring of power + rainbow belt + 1(?)
             skillBonus: {}
         }
