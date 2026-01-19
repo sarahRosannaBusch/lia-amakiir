@@ -1,22 +1,15 @@
 {
   "files": {
-    "main.css": "/lia-amakiir/static/css/main.4c0614b3.chunk.css",
-    "main.js": "/lia-amakiir/static/js/main.4053681c.chunk.js",
-    "main.js.map": "/lia-amakiir/static/js/main.4053681c.chunk.js.map",
-    "runtime-main.js": "/lia-amakiir/static/js/runtime-main.073c1abd.js",
-    "runtime-main.js.map": "/lia-amakiir/static/js/runtime-main.073c1abd.js.map",
-    "static/js/2.3890f559.chunk.js": "/lia-amakiir/static/js/2.3890f559.chunk.js",
-    "static/js/2.3890f559.chunk.js.map": "/lia-amakiir/static/js/2.3890f559.chunk.js.map",
-    "static/js/3.3599a31b.chunk.js": "/lia-amakiir/static/js/3.3599a31b.chunk.js",
-    "static/js/3.3599a31b.chunk.js.map": "/lia-amakiir/static/js/3.3599a31b.chunk.js.map",
+    "main.css": "/lia-amakiir/static/css/main.f98d2bdf.css",
+    "main.js": "/lia-amakiir/static/js/main.212e308d.js",
+    "static/js/453.8ea8a159.chunk.js": "/lia-amakiir/static/js/453.8ea8a159.chunk.js",
     "index.html": "/lia-amakiir/index.html",
-    "static/css/main.4c0614b3.chunk.css.map": "/lia-amakiir/static/css/main.4c0614b3.chunk.css.map",
-    "static/js/2.3890f559.chunk.js.LICENSE.txt": "/lia-amakiir/static/js/2.3890f559.chunk.js.LICENSE.txt"
+    "main.f98d2bdf.css.map": "/lia-amakiir/static/css/main.f98d2bdf.css.map",
+    "main.212e308d.js.map": "/lia-amakiir/static/js/main.212e308d.js.map",
+    "453.8ea8a159.chunk.js.map": "/lia-amakiir/static/js/453.8ea8a159.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.073c1abd.js",
-    "static/js/2.3890f559.chunk.js",
-    "static/css/main.4c0614b3.chunk.css",
-    "static/js/main.4053681c.chunk.js"
+    "static/css/main.f98d2bdf.css",
+    "static/js/main.212e308d.js"
   ]
 }
