@@ -25,7 +25,7 @@ class CharacterSheet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            level: 12,
+            level: 13,
             abilities: {
                 STR: 11, DEX: 12, CON: 12, INT: 11, WIS: 20, CHA: 9
             },
@@ -106,7 +106,7 @@ function LiaHeader(props) {
                 <tr>
                     <td  onClick={openSheet}>
                         <span className='underlined'>
-                            HP Max: {(6+8+4+4+8+4+3+6+4+6+5+4+2)+(CON*props.state.level)}
+                            HP Max: {(6+8+4+4+8+4+3+6+4+6+5+4+2+8)+(CON*props.state.level)}
                         </span>
                     </td>                    
                     <td>AC: {AC} (T: {touchAC}, FF: {ffAC})</td>
@@ -137,7 +137,7 @@ class WildShape extends React.Component {
 
     render() {
         const animals = ANIMALS.map((animal) =>
-            <option key={animal.name} value={animal.name}>{animal.name}</option>
+            <option key={animal.name} value={animal.name}>{animal.name} ({animal.CR})</option>
         );
         const animal = _findAnimal(this.props.form);
 
@@ -261,7 +261,7 @@ function Skills(props) {
     let { STR, DEX, CON, INT, WIS, CHA } = mods;
 
     let skills1 = { //ranks, misc modifiers, ability, class skill
-        concentration: [8, 0, CON, true],
+        concentration: [9, 0, CON, true],
         craft: [4, 0, INT, true],
         diplomacy: [0, 2, CHA, true],
         gatherInfo: [0, 2, CHA, false],
@@ -272,7 +272,7 @@ function Skills(props) {
         listen: [4, 1, WIS, false],
         professionSailing: [1, 0, WIS, true],
         ride: [0, 2, DEX, true],
-        search: [6, 1, INT, false],
+        search: [9, 1, INT, false],
         spellcraft: [2, 0, INT, true],
         spot: [10, 1, WIS, true],
         survival: [5, 5, WIS, true],

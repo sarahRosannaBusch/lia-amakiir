@@ -60,6 +60,22 @@ export const ANIMALS = [
         CR: 2,
         link: 'http://www.d20srd.org/srd/monsters/direBat.htm'
     }, {
+        name: 'Treant',
+        size: "Huge Plant",
+        speed: 30,
+        STR: 29,
+        DEX: 8,
+        CON: 21,
+        naturalArmor: 13,
+        attack: "Slam (2d6+9)",
+        fullAttack: "2 slams (2d6+9)",
+        specialAttacks: ["Animate trees, double damage against objects, trample 2d6+13"],
+        spaceReach: '15ft/15ft',
+        skills: {diplomacy: 3, hide: -9, intimidate: 6, knowledgeNature: 6, listen: 8, senseMotive: 8,
+        spot: 8, survival: 8, survivalInNature: 10},
+        CR: 8,
+        link: 'https://www.d20srd.org/srd/monsters/treant.htm'
+    }, {
         name: 'Megaraptor',
         size: 'large',
         speed: 60,   
@@ -455,7 +471,7 @@ export const ANIMALS = [
         specialAttacks: [],
         spaceReach: '2.5ft/0ft',
         skills: {listen: 4, spot: 16},
-        CR: 1/3,
+        CR: '1/3',
         link: 'https://www.d20srd.org/srd/monsters/hawk.htm'
     }, {
         name: 'Viper Snake',
@@ -472,7 +488,7 @@ export const ANIMALS = [
         specialAttacks: ['poison: 1d6 [FORT DC: 10]'],
         spaceReach: '2.5ft/0ft',
         skills: {balance: 11, climb: 11, hide: 15, listen: 6, spot: 6, swim: 5},
-        CR: 1/3,
+        CR: '1/3',
         link: 'https://www.d20srd.org/srd/monsters/snake.htm#viperSnake'
     }, {
         name: 'Owl',
@@ -535,7 +551,7 @@ export const ANIMALS = [
         specialAttacks: [],
         spaceReach: '2.5ft/0ft',
         skills: {balance: 10, climb: 12, hide: 12, listen: 3, moveSilently: 4, spot: 3},
-        CR: 1/6,
+        CR: '1/6',
         link: 'https://www.d20srd.org/srd/monsters/lizard.htm'
     }, {
         name: 'Monkey',
@@ -551,7 +567,7 @@ export const ANIMALS = [
         specialAttacks: [],
         spaceReach: '2.5ft/0ft',
         skills: {balance: 12, climb: 10, escapeArtist: 4, hide: 10, listen: 3, spot: 3},
-        CR: 1/6,
+        CR: '1/6',
         link: 'https://www.d20srd.org/srd/monsters/monkey.htm'
     }, {
         name: 'Raven',
@@ -567,7 +583,7 @@ export const ANIMALS = [
         specialAttacks: [],
         spaceReach: '2.5ft/0ft',
         skills: {listen: 5, spot: 7},
-        CR: 1/6,
+        CR: '1/6',
         link: 'https://www.d20srd.org/srd/monsters/raven.htm'
     }, {
         name: 'Rat',
@@ -584,7 +600,7 @@ export const ANIMALS = [
         specialAttacks: [],
         spaceReach: '2.5ft/0ft',
         skills: {balance: 10, climb: 12, hide: 16, moveSilently: 10, swim: 10},
-        CR: 1/8,
+        CR: '1/8',
         link: 'https://www.d20srd.org/srd/monsters/rat.htm'
     }, {
         name: 'Rat Swarm',
@@ -696,22 +712,6 @@ export const ANIMALS = [
         skills: {hide: 0, listen: 1, moveSilently: 1, spot: 1},
         CR: 6,
         link: 'https://www.d20srd.org/srd/monsters/tendriculos.htm'
-    }, {
-        name: 'Treant',
-        size: "Huge Plant",
-        speed: 30,
-        STR: 29,
-        DEX: 8,
-        CON: 21,
-        naturalArmor: 13,
-        attack: "Slam (2d6+9)",
-        fullAttack: "2 slams (2d6+9)",
-        specialAttacks: ["Animate trees, double damage against objects, trample 2d6+13"],
-        spaceReach: '15ft/15ft',
-        skills: {diplomacy: 3, hide: -9, intimidate: 6, knowledgeNature: 6, listen: 8, senseMotive: 8,
-        spot: 8, survival: 8, survivalInNature: 10},
-        CR: 8,
-        link: 'https://www.d20srd.org/srd/monsters/treant.htm'
     }, {
         name: '',
         size: "",
